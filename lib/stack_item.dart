@@ -6,43 +6,57 @@ class stack_item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
           border: Border.all(color: Color(0xffc7c7c7)),
-          borderRadius: BorderRadius.circular(8)
+          borderRadius: BorderRadius.circular(10)
       ),
       child: Row(
         children: [
           Container(
-            height: 80,
+            height: 85,
             width: 8,
             decoration: BoxDecoration(
                 color: Color(0xffF69393),
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(8), bottomLeft: Radius.circular(8))
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))
             ),
           ),
           Container(
             margin: const EdgeInsets.only(left: 10),
-            height: 80,
+            height: 85,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Text("NW 1.Test", style: TextStyle(fontFamily: "Outfit_Bold", fontSize: 15))
+                    margin: const EdgeInsets.only(top: 12),
+                    child: Text("NW 1.Test", style: TextStyle(fontFamily: "Outfit_Bold", fontSize: 14))
                 ),
                 Container(
                     child: Text("26 Cards", style: TextStyle(fontSize: 12, color: Color(0xff909090)))
                 ),
-                Row(
-                  children: [
-                    Container(
-                      height: 10,
-                      width: 10,
-                      color: Colors.grey,
-                    )
-                  ],
+                Container(
+                  margin: const EdgeInsets.only(top: 17),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Color(0xffF69393),
+                          Color(0xffF69393),
+                          Color(0xffEFF693),
+                          Color(0xffEFF693),
+                          Color(0xff93F6AF),
+                          Color(0xff93F6AF),
+                        ],
+                        stops: [0.0, 0.4, 0.4, 0.5, 0.5, 1]
+                    ),
+                  ),
+                  height: 10,
+                  width: screenWidth-62,
                 )
               ],
             ),
