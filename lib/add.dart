@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 
-class add extends StatefulWidget {
-  const add({Key? key}) : super(key: key);
-  @override
-  _add createState() => _add();
-}
-
-class _add extends State<add>  {
-
+class add extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('options'),
-        ),
-        body: Container(
-          child: Text("dark mode, programmierer, language"
-              "sonstige improvements: search History, Kamera, button, share online()"),
-        )
+    return SafeArea(
+      child: Column(
+          children: <Widget>[
+            Container(
+              margin:  const EdgeInsets.only( left: 10),
+              child: Text("Add", style: TextStyle(fontSize: 35)),
+            ),
+          ]
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class explore extends StatelessWidget {
+class settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -8,7 +8,7 @@ class explore extends StatelessWidget {
           children: <Widget>[
             Container(
               margin:  const EdgeInsets.only( left: 10),
-              child: Text("Explore", style: TextStyle(fontSize: 35)),
+              child: Text("Settings", style: TextStyle(fontSize: 35)),
             ),
           ]
       ),
