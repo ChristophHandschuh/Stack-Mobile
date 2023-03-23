@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class stack_item extends StatelessWidget {
-  const stack_item({Key? key}) : super(key: key);
+  final data;
+  final index;
+  const stack_item({Key? key, required this.data, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class stack_item extends StatelessWidget {
               children: [
                 Container(
                     margin: const EdgeInsets.only(top: 12),
-                    child: Text("NW 1.Test", style: TextStyle(fontFamily: "Outfit_Bold", fontSize: 14))
+                    child: Text(data["name"], style: TextStyle(fontFamily: "Outfit_Bold", fontSize: 14))
                 ),
                 Container(
                     child: Text("26 Cards", style: TextStyle(fontSize: 12, color: Color(0xff909090)))
@@ -45,14 +47,14 @@ class stack_item extends StatelessWidget {
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: [
-                          Color(0xffF69393),
-                          Color(0xffF69393),
-                          Color(0xffEFF693),
-                          Color(0xffEFF693),
                           Color(0xff93F6AF),
                           Color(0xff93F6AF),
+                          Color(0xffEFF693),
+                          Color(0xffEFF693),
+                          Color(0xffF69393),
+                          Color(0xffF69393),
                         ],
-                        stops: [0.0, 0.4, 0.4, 0.5, 0.5, 1]
+                        stops: [0.0, 0.4, 0.4, 0.55, 0.55, 1]
                     ),
                   ),
                   height: 10,
