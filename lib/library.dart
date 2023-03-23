@@ -9,14 +9,12 @@ class library_page extends StatefulWidget {
 }
 
 class _library_pageState extends State<library_page> {
-  //final storage = Hive.box('storage');
-  final List<Map<String, dynamic>> stacks = [
-    {"_id":"6418b5cb5b24419611235fc5","userID":"63b70dd8c8999a7064f1e6ab","name":"stack","color":"#EE8989","cardsNew":0,"cardsLearning":0,"cardsLearned":0,"cards":[],"createdAt":"2023-03-20T19:36:43.316Z"},
-    {"_id":"640da3c3da939706591dc610","userID":"63b70dd8c8999a7064f1e6ab","name":"test","color":"#EE8989","cardsNew":7,"cardsLearning":0,"cardsLearned":0,"cards":[{"card_id":"640f2b8eeee9ac96a8f955f8","status":"new","ease_factor":250,"step_index":0,"time":1678715790802,"interval":0}],"createdAt":"2023-03-12T10:04:51.907Z"}
-  ];
-
+  final storage = Hive.box('storage');
+  //List<Map<String, dynamic>> stacks = [];
+  late final stacks = storage.get(0);
   // This list holds the data for the list view
-  List<Map<String, dynamic>> foundStacks = [];
+  //List<Map<String, dynamic>>
+  var foundStacks = [];
 
   @override initState() {
     foundStacks = stacks;
@@ -41,7 +39,8 @@ class _library_pageState extends State<library_page> {
 
   @override
   Widget build(BuildContext context) {
-    //print(storage.get(0));
+    //stacks = storage.get(0);
+    print("DATA!!!!" + storage.get(0).toString());
     return SafeArea(
       child: Column(
           children: <Widget>[

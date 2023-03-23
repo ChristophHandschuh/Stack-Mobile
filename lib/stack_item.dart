@@ -9,6 +9,13 @@ class stack_item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    var learned = 0;
+    var learning = 0;
+    var new_card = 0;
+
+    for(var i = 0; i<data["cards"].length; i++){
+      //if(data["cards"][i].status
+    }
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
@@ -22,7 +29,7 @@ class stack_item extends StatelessWidget {
             height: 85,
             width: 8,
             decoration: BoxDecoration(
-                color: Color(0xffF69393),
+                color: Color(int.parse(data["color"].replaceAll('#', '0xff'))),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))
             ),
           ),
@@ -37,7 +44,7 @@ class stack_item extends StatelessWidget {
                     child: Text(data["name"], style: TextStyle(fontFamily: "Outfit_Bold", fontSize: 14))
                 ),
                 Container(
-                    child: Text("26 Cards", style: TextStyle(fontSize: 12, color: Color(0xff909090)))
+                    child: Text(data["cards"].length.toString() + " Cards", style: TextStyle(fontSize: 12, color: Color(0xff909090)))
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 17),
