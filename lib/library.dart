@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:stack_flashcards/stack_item.dart';
+import 'package:stack_flashcards/fetch_stacks.dart';
 
 class library_page extends StatefulWidget {
 
@@ -80,15 +81,20 @@ class _library_pageState extends State<library_page> {
               ),
             ),
             Expanded(
-              child: foundStacks.isNotEmpty
-                  ? ListView.builder(
+            child: foundStacks.isNotEmpty
+                ? RefreshIndicator(
+                  child: ListView.builder(
                       padding: const EdgeInsets.only(left: 12, right: 12, top: 15),
                       itemCount: foundStacks.length,
                       itemBuilder: (context, index) => stack_item(data: foundStacks[index], index: index),
-              ) : Container(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Text("no Results")
-              ),
+                  ),
+                  onRefresh: (){
+                        return fetch_stacks();
+                  },
+                ) : Container(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text("no Results")
+            ),
             ),
           ]
       ),
