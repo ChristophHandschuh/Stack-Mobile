@@ -12,7 +12,7 @@ class library_page extends StatefulWidget {
 class _library_pageState extends State<library_page> {
   final storage = Hive.box('storage');
   //List<Map<String, dynamic>> stacks = [];
-  late final stacks = storage.get(0);
+  late var stacks = storage.get(0);
   // This list holds the data for the list view
   //List<Map<String, dynamic>>
   var foundStacks = [];
@@ -39,8 +39,6 @@ class _library_pageState extends State<library_page> {
 
   @override
   Widget build(BuildContext context) {
-    //stacks = storage.get(0);
-    print("DATA!!!!" + storage.get(0).toString());
     return SafeArea(
       child: Column(
           children: <Widget>[
@@ -88,8 +86,9 @@ class _library_pageState extends State<library_page> {
                       itemCount: foundStacks.length,
                       itemBuilder: (context, index) => stack_item(data: foundStacks[index], index: index),
                   ),
-                  onRefresh: (){
-                        return fetch_stacks();
+                  onRefresh: () async {
+                    await fetch_stacks();
+                    stacks = storage.get(0);
                   },
                 ) : Container(
                   padding: EdgeInsets.only(top: 10),
