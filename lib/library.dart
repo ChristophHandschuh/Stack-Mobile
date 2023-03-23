@@ -23,12 +23,11 @@ class _library_pageState extends State<library_page> {
 
   // This function is called whenever the text field changes
   void runFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
+    var results = [];
     if (enteredKeyword.isEmpty) {
       results = stacks;
     } else {
-      print(stacks.where((user) => user["name"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList());
-      results = stacks.where((user) => user["name"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
+      results = stacks.where((user) => user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()) ? true : false).toList();
     }
 
     // Refresh the UI

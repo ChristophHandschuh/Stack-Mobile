@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:stack_flashcards/fetch_stacks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -32,22 +32,8 @@ class Stack extends StatefulWidget {
 }
 
 class _StackState extends State<Stack> {
-  Future usersFuture = fetchUsers();
-
-  //http download from server and save
-  static Future fetchUsers() async {
-    const url = 'http://my-json-server.typicode.com/ChristophHandschuh/Stack-Mobile/stacks';
-    final response = await http.get(Uri.parse(url));
-    final body = json.decode(response.body);
-    log("json: $body");
-
-    //init Hive and open storage
-    await Hive.initFlutter();
-    var storage = await Hive.openBox('storage');
-    storage.put(0, body['results']);
-  }
-
   int index = 0;
+  Future fetch = fetch_stacks();
 
   final pages = [
     home(),
