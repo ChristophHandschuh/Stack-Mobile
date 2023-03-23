@@ -36,6 +36,7 @@ class _StackState extends State<Stack> {
 
   //http download from server and save
   static Future fetchUsers() async {
+    try{
     const url = 'http://my-json-server.typicode.com/ChristophHandschuh/Stack-Mobile/stacks';
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
@@ -45,6 +46,9 @@ class _StackState extends State<Stack> {
     await Hive.initFlutter();
     var storage = await Hive.openBox('storage');
     storage.put(0, body['results']);
+    } catch(e) {
+      log("No internet: json couldn't load");
+    }
   }
 
   int index = 0;
