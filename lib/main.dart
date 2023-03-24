@@ -1,16 +1,11 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'package:stack_flashcards/fetch_stacks.dart';
+import 'package:stack_flashcards/functions/fetch_stacks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:stack_flashcards/library.dart';
 import 'package:stack_flashcards/settings.dart';
 import 'package:stack_flashcards/home.dart';
 import 'package:stack_flashcards/add.dart';
 import 'package:stack_flashcards/explore.dart';
-import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

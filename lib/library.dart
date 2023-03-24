@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:stack_flashcards/stack_item.dart';
-import 'package:stack_flashcards/fetch_stacks.dart';
+import 'package:stack_flashcards/widgets/stack_item.dart';
+import 'package:stack_flashcards/functions/fetch_stacks.dart';
 
 class library_page extends StatefulWidget {
 
@@ -16,6 +16,7 @@ class _library_pageState extends State<library_page> {
   // This list holds the data for the list view
   //List<Map<String, dynamic>>
   var foundStacks = [];
+  var search_text;
 
   @override initState() {
     foundStacks = stacks;
@@ -24,6 +25,7 @@ class _library_pageState extends State<library_page> {
 
   //this function is called whenever the text field changes
   void runFilter(String enteredKeyword) {
+    search_text = enteredKeyword;
     var results = [];
     if (enteredKeyword.isEmpty) {
       results = stacks;
@@ -81,6 +83,7 @@ class _library_pageState extends State<library_page> {
             Expanded(
             child: foundStacks.isNotEmpty
                 ? RefreshIndicator(
+                  color: Colors.black,
                   child: ListView.builder(
                       padding: const EdgeInsets.only(left: 12, right: 12, top: 15),
                       itemCount: foundStacks.length,
@@ -89,6 +92,7 @@ class _library_pageState extends State<library_page> {
                   onRefresh: () async {
                     await fetch_stacks();
                     stacks = storage.get(0);
+                    runFilter(search_text);
                   },
                 ) : Container(
                   padding: EdgeInsets.only(top: 10),
