@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:stack_flashcards/functions/fetch_cards.dart';
+import 'package:stack_flashcards/learn_cards.dart';
 import 'package:stack_flashcards/widgets/card_item.dart';
 
 class stack_info extends StatefulWidget {
@@ -86,8 +87,11 @@ class _stack_infoState extends State<stack_info> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(stacks[widget.index]["name"], style: TextStyle(fontSize: 20, fontFamily: "Outfit_Bold")),
-                          Text(stacks[widget.index]["cards"].length.toString() + " Cards", style: TextStyle(color: Color(0xff909090))),
+                          Text(stacks[widget.index]["name"], style: TextStyle(fontSize: 23, fontFamily: "Outfit_Bold")),
+                          Container(
+                              margin: const EdgeInsets.only(left: 2),
+                              child: Text(stacks[widget.index]["cards"].length.toString() + " Cards", style: TextStyle(color: Color(0xff909090)))
+                          ),
                         ],
                       ),
                     ),
@@ -100,24 +104,32 @@ class _stack_infoState extends State<stack_info> {
                     border: Border.all(color: Color(0xffc7c7c7)),
                     borderRadius: BorderRadius.circular(10)
                 ),
-                child:
-                Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                      child: Icon(Icons.history_edu, size: 35),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Practice", style: TextStyle(fontSize: 18, fontFamily: "Outfit_Bold")),
-                          Text("Review Terms and defintions", style: TextStyle(color: Color(0xff909090))),
-                        ],
+                child: InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => learn_cards(),
                       ),
-                    ),
-                  ],
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                        child: Icon(Icons.history_edu, size: 35),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Practice", style: TextStyle(fontSize: 18, fontFamily: "Outfit_Bold")),
+                            Text("Review Terms and defintions", style: TextStyle(color: Color(0xff909090))),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -148,7 +160,7 @@ class _stack_infoState extends State<stack_info> {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20, top: 25),
-                child: Text("Cards", style: TextStyle(fontSize: 25)),
+                child: Text("Cards", style: TextStyle(fontSize: 20)),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
