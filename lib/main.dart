@@ -15,18 +15,18 @@ void main() async {
   runApp(MaterialApp(
       theme: ThemeData(fontFamily: 'Outfit'),
       debugShowCheckedModeBanner: false,
-      home: Stack()
+      home: Stack_App()
   ));
 }
 
-class Stack extends StatefulWidget {
-  const Stack({Key? key}) : super(key: key);
+class Stack_App extends StatefulWidget {
+  const Stack_App({Key? key}) : super(key: key);
 
   @override
-  State<Stack> createState() => _StackState();
+  State<Stack_App> createState() => _StackState();
 }
 
-class _StackState extends State<Stack> {
+class _StackState extends State<Stack_App> {
   int index = 0;
   Future fetch = fetch_stacks();
 

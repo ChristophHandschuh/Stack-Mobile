@@ -23,6 +23,13 @@ class _library_pageState extends State<library_page> {
     super.initState();
   }
 
+  void updateStacks() {
+    setState(() {
+      stacks = storage.get(0);
+      foundStacks = stacks;
+    });
+  }
+
   //this function is called whenever the text field changes
   void runFilter(String enteredKeyword) {
     search_text = enteredKeyword;
@@ -92,7 +99,7 @@ class _library_pageState extends State<library_page> {
                   onRefresh: () async {
                     await fetch_stacks();
                     stacks = storage.get(0);
-                    runFilter(search_text);
+                    updateStacks();
                   },
                 ) : Container(
                   padding: EdgeInsets.only(top: 10),

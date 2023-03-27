@@ -89,7 +89,7 @@ class _stack_infoState extends State<stack_info> {
                         children: [
                           Text(stacks[widget.index]["name"], style: TextStyle(fontSize: 23, fontFamily: "Outfit_Bold")),
                           Container(
-                              margin: const EdgeInsets.only(left: 2),
+                              margin: const EdgeInsets.only(left: 1),
                               child: Text(stacks[widget.index]["cards"].length.toString() + " Cards", style: TextStyle(color: Color(0xff909090)))
                           ),
                         ],
