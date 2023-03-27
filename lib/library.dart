@@ -96,7 +96,7 @@ class _library_pageState extends State<library_page> {
                   },
                 ) : Container(
                   padding: EdgeInsets.only(top: 10),
-                  child: Text("no Results")
+                  child: Text("no results")
             ),
             ),
           ]

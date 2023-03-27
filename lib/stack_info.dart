@@ -1,16 +1,52 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:stack_flashcards/functions/fetch_cards.dart';
+import 'package:stack_flashcards/widgets/card_item.dart';
 
-class stack_info extends StatelessWidget {
+class stack_info extends StatefulWidget {
   final index;
   const stack_info({Key? key, required this.index}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final storage = Hive.box('storage');
-    late var stacks = storage.get(0);
+  State<stack_info> createState() => _stack_infoState();
+}
+
+class _stack_infoState extends State<stack_info> {
+  final storage = Hive.box('storage');
+  late var stacks = storage.get(0);
+  var cards = [];
+  var foundCards = [];
+  var search_text;
+
+  @override initState(){
     fetch_cards();
+    for(var i=0; i<stacks[widget.index]["cards"].length; i++){
+      cards.insert(i, storage.get(stacks[widget.index]["cards"][i]["card_id"]));
+    }
+    foundCards = cards;
+    super.initState();
+  }
+
+  //this function is called whenever the text field changes
+  void runFilter(String enteredKeyword) {
+    search_text = enteredKeyword;
+    var results = [];
+    if (enteredKeyword.isEmpty) {
+      results = cards;
+    } else {
+      results = cards.where((user) => user["front"].toLowerCase().contains(enteredKeyword.toLowerCase()) ? true : false).toList();
+    }
+
+    // Refresh the UI
+    setState(() {
+      foundCards = results;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //storage.get(stacks[index]["cards"][0]["card_id"]).toString()
 
     return Scaffold(
         body: SafeArea(
@@ -43,15 +79,15 @@ class stack_info extends StatelessWidget {
                     Container(
                       height: 55,
                       width: 12,
-                      color: Color(int.parse(stacks[index]["color"].replaceAll('#', '0xff'))),
+                      color: Color(int.parse(stacks[widget.index]["color"].replaceAll('#', '0xff'))),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(stacks[index]["name"], style: TextStyle(fontSize: 20, fontFamily: "Outfit_Bold")),
-                          Text(stacks[index]["cards"].length.toString() + " Cards", style: TextStyle(color: Color(0xff909090))),
+                          Text(stacks[widget.index]["name"], style: TextStyle(fontSize: 20, fontFamily: "Outfit_Bold")),
+                          Text(stacks[widget.index]["cards"].length.toString() + " Cards", style: TextStyle(color: Color(0xff909090))),
                         ],
                       ),
                     ),
@@ -117,7 +153,7 @@ class stack_info extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
                 child: TextField(
-                  onChanged: (value) => print(value),
+                  onChanged: (value) => runFilter(value),
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     prefixIconConstraints: BoxConstraints(
@@ -142,25 +178,30 @@ class stack_info extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(storage.get(stacks[index]["cards"][0]["card_id"]).toString()),
-              /*Expanded(
-                child: foundStacks.isNotEmpty ? RefreshIndicator(
-                  color: Colors.black,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(left: 12, right: 12, top: 15),
-                    itemCount: foundStacks.length,
-                    itemBuilder: (context, index) => stack_item(data: foundStacks[index], index: index),
-                  ),
-                  onRefresh: () async {
-                    await fetch_stacks();
-                    stacks = storage.get(0);
-                    runFilter(search_text);
-                  },
-                ) : Container(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Text("no Results")
+              Expanded(
+                child: foundCards.isNotEmpty
+                  ? RefreshIndicator(
+                    color: Colors.black,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(left: 12, right: 12, top: 15),
+                      itemCount: foundCards.length,
+                      itemBuilder: (context, index) => card_item(data: foundCards[index]),
+                    ),
+                    onRefresh: () async {
+                      await fetch_cards();
+                      //
+                    },
+                ) : Column( //not perfect, but works
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.only(top: 10),
+                        child: Center(child: Text("no results"))
+                    ),
+                  ],
                 ),
-              ),*/
+              ),
             ],
           ),
         )
