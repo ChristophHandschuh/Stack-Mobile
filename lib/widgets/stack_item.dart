@@ -47,7 +47,7 @@ class stack_item extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              height: 85,
+              height: sum>0 ? 85 : 60,
               width: 8,
               decoration: BoxDecoration(
                   color: Color(int.parse(data["color"].replaceAll('#', '0xff'))),
@@ -56,7 +56,7 @@ class stack_item extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(left: 10),
-              height: 85,
+              height: sum>0 ? 85 : 60,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -67,27 +67,35 @@ class stack_item extends StatelessWidget {
                   Container(
                       child: Text(data["cards"].length.toString() + " Cards", style: TextStyle(fontSize: 12, color: Color(0xff909090)))
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 17),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color(0xff93F6AF),
-                            Color(0xff93F6AF),
-                            Color(0xffEFF693),
-                            Color(0xffEFF693),
-                            Color(0xffF69393),
-                            Color(0xffF69393),
-                          ],
-                          stops: [0.0, learned, learned, new_card, new_card, 1]
+                  if(sum > 0)
+                    Container(
+                      margin: const EdgeInsets.only(top: 17),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              Color(0xff93F6AF),
+                              Color(0xff93F6AF),
+                              Color(0xffEFF693),
+                              Color(0xffEFF693),
+                              Color(0xffF69393),
+                              Color(0xffF69393),
+                            ],
+                            stops: [
+                              0.0,
+                              learned,
+                              learned,
+                              new_card,
+                              new_card,
+                              1
+                            ]
+                        ),
                       ),
-                    ),
-                    height: 10,
-                    width: screenWidth-62,
-                  )
+                      height: 10,
+                      width: screenWidth - 62,
+                    )
                 ],
               ),
             ),
