@@ -203,15 +203,30 @@ class _stack_infoState extends State<stack_info> {
                       await fetch_cards();
                       //
                     },
-                ) : Column( //not perfect, but works
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.only(top: 10),
-                        child: Center(child: Text("no results"))
+                ) : LayoutBuilder(
+                  builder: (context, constraints) => RefreshIndicator(
+                    color: Colors.black,
+                    onRefresh: () async {
+                      print("asd");
+                    },
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
+                            minWidth: constraints.maxWidth
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Column(
+                            children: [
+                              Text("no results"),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],

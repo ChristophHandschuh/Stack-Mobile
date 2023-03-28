@@ -101,11 +101,32 @@ class _library_pageState extends State<library_page> {
                     stacks = storage.get(0);
                     updateStacks();
                   },
-                ) : Container(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Text("no results")
-            ),
-            ),
+                ) : LayoutBuilder(
+                      builder: (context, constraints) => RefreshIndicator(
+                        color: Colors.black,
+                        onRefresh: () async {
+                          print("asd");
+                        },
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
+                            minWidth: constraints.maxWidth
+                          ),
+                            child: Container(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Column(
+                              children: [
+                                Text("no results"),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ]
       ),
     );
