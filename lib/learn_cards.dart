@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_swipable/flutter_swipable.dart';
+import 'package:flutter/widgets.dart';
+
+import 'widgets/card_ui.dart';
 
 class learn_cards extends StatefulWidget {
   const learn_cards({Key? key}) : super(key: key);
@@ -12,8 +14,6 @@ class learn_cards extends StatefulWidget {
 class _learn_cardsState extends State<learn_cards> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
 
     return (
       Scaffold(
@@ -38,23 +38,17 @@ class _learn_cardsState extends State<learn_cards> {
               ),
               Expanded(
                 child: Center(
-                  //child: Swipable(
-                    child: Container(
-                      //margin: const EdgeInsets.only(top: 20),
-                      height: screenWidth*1.4,
-                      width: screenWidth-60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xffc7c7c7)),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 5,
-                            offset: Offset(0, 2), // Shadow position
-                          ),
-                        ],
-                      ),
+                    child: Draggable(
+                      child: card_ui(data: "cards1"),
+                      feedback: card_ui(data: "cards2"),
+                      //check for left or right swipe
+                      onDragEnd: (drag) {
+                        if (drag.offset.dx > 0) {
+                          print("right");
+                        } else {
+                          print("left");
+                        }
+                      },
                     ),
                   ),
                 ),
