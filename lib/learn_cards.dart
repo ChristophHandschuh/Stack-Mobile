@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'widgets/card_ui.dart';
+import 'package:stack_flashcards/widgets/card_swipe.dart';
 
 class learn_cards extends StatefulWidget {
   const learn_cards({Key? key}) : super(key: key);
@@ -11,10 +10,9 @@ class learn_cards extends StatefulWidget {
   State<learn_cards> createState() => _learn_cardsState();
 }
 
-class _learn_cardsState extends State<learn_cards> {
+class _learn_cardsState extends State<learn_cards>{
   @override
   Widget build(BuildContext context) {
-
     return (
       Scaffold(
         body: SafeArea(
@@ -38,21 +36,30 @@ class _learn_cardsState extends State<learn_cards> {
               ),
               Expanded(
                 child: Center(
-                    child: Draggable(
-                      child: card_ui(data: "cards1"),
-                      feedback: card_ui(data: "cards2"),
-                      //check for left or right swipe
-                      onDragEnd: (drag) {
-                        if (drag.offset.dx > 0) {
-                          print("right");
-                        } else {
-                          print("left");
-                        }
-                      },
-                    ),
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        //margin: const EdgeInsets.only(top: 20),
+                        height: MediaQuery.of(context).size.width*1.4,
+                        width: MediaQuery.of(context).size.width-60,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Color(0xffc7c7c7)),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 5,
+                              offset: Offset(0, 2), // Shadow position
+                            ),
+                          ],
+                        ),
+                      ),
+                      card_swipe(data: "HALLO"),
+                    ],
                   ),
-                ),
-              //),
+                )
+              ),
             ],
           ),
         ),
