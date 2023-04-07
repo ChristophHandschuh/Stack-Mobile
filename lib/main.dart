@@ -1,7 +1,10 @@
+import 'package:stack_flashcards/functions/check_login.dart';
 import 'package:stack_flashcards/functions/fetch_stacks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stack_flashcards/library.dart';
+import 'package:stack_flashcards/login.dart';
+import 'package:stack_flashcards/main_page.dart';
 import 'package:stack_flashcards/settings.dart';
 import 'package:stack_flashcards/home.dart';
 import 'package:stack_flashcards/add.dart';
@@ -27,57 +30,22 @@ class Stack_App extends StatefulWidget {
 }
 
 class _StackState extends State<Stack_App> {
-  int index = 0;
-  Future fetch = fetch_stacks();
-
-  final pages = [
-    home(),
-    library_page(),
-    add(),
-    explore(),
-    settings()
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[index],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined, size: 23),
-            activeIcon: Icon(Icons.home, size: 23),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_library_outlined, size: 23),
-            activeIcon: Icon(Icons.local_library, size: 23),
-            label: 'Library',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline_outlined, size: 23),
-            activeIcon: Icon(Icons.add_circle_outlined, size: 23),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore_outlined, size: 23),
-            activeIcon: Icon(Icons.explore, size: 23),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined, size: 23),
-            activeIcon: Icon(Icons.settings, size: 23),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: index,
-        selectedItemColor: Colors.grey[700],
-        unselectedItemColor: Colors.grey[700],
-        onTap: (index) => setState(() => this.index = index),
-      ),
+    return FutureBuilder(
+      future: check_login(),
+      builder: (context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData && snapshot.data == true) {
+            return main_page();
+          } else {
+            return Login();
+          }
+        }else{
+          //if no network connection
+          return main_page();
+        }
+      }
     );
   }
 }
