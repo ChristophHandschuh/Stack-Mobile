@@ -33,6 +33,7 @@ class _StackState extends State<Stack_App> {
             if (snapshot.hasData && snapshot.data == true) {
               return main_page();
             } else if(snapshot.hasData && snapshot.data == false){
+              print("LOGIN");
               return Login();
             }else{
               return Scaffold(
@@ -40,11 +41,10 @@ class _StackState extends State<Stack_App> {
                   child: Text("Error"),
                 ),
               );
-            };
+            }
           }else{
             return Scaffold();
           }
-          return Scaffold();
         }
     );
   }

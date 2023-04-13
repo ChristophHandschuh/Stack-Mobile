@@ -16,8 +16,6 @@ class stack_item extends StatelessWidget {
     double new_card = 0;
 
     for(var i = 0; i<data["cards"].length; i++){
-      print("DATA");
-      print(data["cards"][i]);
       if(data["cards"][i]["status"] == "new"){
         new_card++;
       }else if(data["cards"][i]["status"] == "learning"){

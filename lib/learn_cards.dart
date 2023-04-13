@@ -6,7 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:stack_flashcards/widgets/card_empty.dart';
 import 'package:stack_flashcards/widgets/card_swipe.dart';
 import 'package:hive/hive.dart';
+
 import 'functions/learn_Algo.dart';
+//import 'functions/learn_Algo.dart';
 
 class learn_cards extends StatefulWidget {
   final index;
@@ -33,27 +35,28 @@ class _learn_cardsState extends State<learn_cards>{
   @override
   Widget build(BuildContext context) {
     Function onLeftSwipe = () {
-      return () {
-        var card_now = learn_Algo(false, cards);
+      return () async {
+        var card_now = await learn_Algo(false, cards);
+        print(card_now.isNotEmpty);
         stacks[widget.index]["cards"] = cards;
         storage.put(0, stacks);
-        print(stacks[widget.index]["cards"]);
         setState(() {
           cards_stack.removeAt(0);
-          //cards_stack.add(card_now);
+          if(card_now.isNotEmpty)
+            cards_stack.add(card_now);
         });
       };
     };
 
     Function onRightSwipe = () {
-      return () {
-        /*var card_now = learn_Algo(true, cards);
+      return () async{
+        var card_now = await learn_Algo(true, cards);
         stacks[widget.index]["cards"] = cards;
         storage.put(0, stacks);
-        print(stacks[widget.index]["cards"]);*/
         setState(() {
           cards_stack.removeAt(0);
-          //cards.add(card_now);
+          if(card_now.isNotEmpty)
+            cards_stack.add(card_now);
         });
       };
     };
