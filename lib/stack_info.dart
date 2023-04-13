@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:stack_flashcards/functions/fetch_cards.dart';
@@ -13,20 +12,31 @@ class stack_info extends StatefulWidget {
   State<stack_info> createState() => _stack_infoState();
 }
 
-class _stack_infoState extends State<stack_info> {
+class _stack_infoState extends State<stack_info>{
   final storage = Hive.box('storage');
   late var stacks = storage.get(0);
   var cards = [];
   var foundCards = [];
   var search_text;
 
+  get_cards() async{
+    await fetch_cards(stacks[widget.index]["_id"]);
+    cards = [];
+    for(var i=0; i<stacks[widget.index]["cards"].length; i++){
+      cards.insert(i, storage.get(stacks[widget.index]["cards"][i]["card_id"]));
+    }
+    setState(() {
+      foundCards = cards;
+    });
+  }
+
   @override initState(){
-    fetch_cards();
     for(var i=0; i<stacks[widget.index]["cards"].length; i++){
       cards.insert(i, storage.get(stacks[widget.index]["cards"][i]["card_id"]));
     }
     foundCards = cards;
     super.initState();
+    get_cards();
   }
 
   //this function is called whenever the text field changes
@@ -62,7 +72,7 @@ class _stack_infoState extends State<stack_info> {
                         onTap: (){
                           Navigator.pop(context);
                         },
-                        child: Icon(Icons.arrow_back_ios_new, size: 23)
+                        child: Icon(Icons.arrow_back_ios_new, size: 23),
                     ),
                     Spacer(),
                     Icon(Icons.share, size: 23),
@@ -108,7 +118,7 @@ class _stack_infoState extends State<stack_info> {
                   onTap: (){
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => learn_cards(),
+                        builder: (_) => learn_cards(index: widget.index),
                       ),
                     );
                   },
@@ -200,14 +210,13 @@ class _stack_infoState extends State<stack_info> {
                       itemBuilder: (context, index) => card_item(data: foundCards[index]),
                     ),
                     onRefresh: () async {
-                      await fetch_cards();
-                      //
+                      await get_cards();
                     },
                 ) : LayoutBuilder(
                   builder: (context, constraints) => RefreshIndicator(
                     color: Colors.black,
                     onRefresh: () async {
-                      print("asd");
+                      await get_cards();
                     },
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),

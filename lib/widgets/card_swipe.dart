@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
@@ -27,7 +29,7 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
   }
   bool _swipeMeetsEscapeVelocity(Offset dragOffset, Velocity velocity){
     //return dragOffset.distance + velocity.pixelsPerSecond.distance > 3*MediaQuery.of(context).size.width/4 && velocity.pixelsPerSecond.distance > 400;
-    return dragOffset.distance.abs() > MediaQuery.of(context).size.width/4 && velocity.pixelsPerSecond.distance > 200;
+    return dragOffset.distance.abs() > MediaQuery.of(context).size.width/6 && velocity.pixelsPerSecond.distance > 150;
   }
 
   void swipe_direction(){
@@ -72,7 +74,7 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
           ],
         ),
         child: Center(
-          child: Text(widget.data, style: TextStyle(fontSize: 22, fontFamily: "Outfit", color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
+          child: Text(widget.data["front"], style: TextStyle(fontSize: 22, fontFamily: "Outfit", color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
         ),
       ),
       back: AnimatedBuilder(
@@ -94,7 +96,6 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
               onPanEnd: (DragEndDetails details){
                 Offset userDragOffset = dragUpdateOffset - dragStartOffset;
                 if(_swipeMeetsEscapeVelocity(userDragOffset, details.velocity)){
-                  print("Jojojojojojo");
                   FrictionSimulation frictionSimulation = FrictionSimulation(0.5, cardAnimationController.value, details.velocity.pixelsPerSecond.distance);//FrictionSimulation(1, cardAnimationController.value, 0);
                   cardAnimationController.animateWith(frictionSimulation);
                 }else{
@@ -124,7 +125,7 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                   ],
                 ),
                 child: Center(
-                  child: Text(widget.data, style: TextStyle(fontSize: 22, fontFamily: "Outfit", color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
+                  child: Text(widget.data["back"], style: TextStyle(fontSize: 22, fontFamily: "Outfit", color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
                 ),
               ),
             ),

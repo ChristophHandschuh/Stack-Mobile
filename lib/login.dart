@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stack_flashcards/functions/check_login.dart';
 import 'package:stack_flashcards/functions/login_func.dart';
 import 'package:stack_flashcards/home.dart';
+import 'package:stack_flashcards/main_page.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -56,7 +57,7 @@ class _LoginState extends State<Login> {
                    if(data["loggedIn"] == true){
                      Navigator.of(context).push(
                        MaterialPageRoute(
-                         builder: (_) => home(),
+                         builder: (_) => main_page(),
                        ),
                      );
                    }

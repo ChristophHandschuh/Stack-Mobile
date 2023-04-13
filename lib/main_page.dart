@@ -4,6 +4,7 @@ import 'package:stack_flashcards/settings.dart';
 import 'package:stack_flashcards/home.dart';
 import 'package:stack_flashcards/add.dart';
 import 'package:stack_flashcards/explore.dart';
+import 'package:stack_flashcards/functions/fetch_stacks.dart';
 
 class main_page extends StatefulWidget {
   const main_page({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class main_page extends StatefulWidget {
 }
 
 class _main_pageState extends State<main_page> {
+  Future fetch = fetch_stacks();
   int index = 0;
 
   final pages = [
