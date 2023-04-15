@@ -20,7 +20,7 @@ Future fetch_stacks() async {
   var cookieJar = PersistCookieJar(ignoreExpires: true, storage: FileStorage(appDocDir.path + "/.cookies/"));
   dio.interceptors.add(CookieManager(cookieJar));
   try{
-    Response response = await dio.get('http://172.245.156.33:3001/stacks');
+    Response response = await dio.get('https://stack-study.me:3001/stacks');
     final data = response.data;
     //log("json: $data");
     storage.put(0, data['results']);

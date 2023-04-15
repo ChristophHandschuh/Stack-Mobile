@@ -115,6 +115,7 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Color(0xffc7c7c7)),
+                  //border: Border.all(color: Colors.red),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(

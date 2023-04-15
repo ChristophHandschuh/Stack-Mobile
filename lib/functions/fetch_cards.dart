@@ -22,7 +22,7 @@ Future fetch_cards(String stack_id) async {
     /*const url = 'http://my-json-server.typicode.com/ChristophHandschuh/Stack-Mobile/cards';
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);*/
-    Response response = await dio.get('http://172.245.156.33:3001/cards', queryParameters: {"_id": stack_id});
+    Response response = await dio.get('https://stack-study.me:3001/cards', queryParameters: {"_id": stack_id});
     final data = response.data;
     //log("Fetch_CARDS: $data");
     for(var i = 0; i<data.length; i++)

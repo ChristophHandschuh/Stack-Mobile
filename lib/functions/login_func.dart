@@ -10,7 +10,7 @@ Future login_func(String username , password) async {
   dio.interceptors.add(CookieManager(cookieJar));
   try{
     //final response = await http.post(Uri.parse(url), headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'}, body: jsonEncode(<String, String>{'username' : username, 'password' : password}));
-    Response response = await dio.post('http://172.245.156.33:3001/login', data: {'username': username, 'password': password});
+    Response response = await dio.post('https://stack-study.me:3001/login', data: {'username': username, 'password': password});
     return response.data;
   }catch(e){
     print("Error in login_func: " + e.toString());

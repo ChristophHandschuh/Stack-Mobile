@@ -13,12 +13,13 @@ Future check_login() async {
   var cookieJar = PersistCookieJar(ignoreExpires: true, storage: FileStorage(appDocDir.path + "/.cookies/"));
   dio.interceptors.add(CookieManager(cookieJar));
   try{
-    //print(await cookieJar.loadForRequest(Uri.parse('http://172.245.156.33:3001/login')));
-    Response response = await dio.get('http://172.245.156.33:3001/login');
+    //print(await cookieJar.loadForRequest(Uri.parse('https://stack-study.me:3001/login')));
+    Response response = await dio.get('https://stack-study.me:3001/login');
     final data = response.data;
     return data["loggedIn"];
     //log("CHECK LOGIN: $body");
   }catch(e) {
     log("No internet: json couldn't load");
+    log(e.toString());
   }
 }
