@@ -61,13 +61,30 @@ class _learn_cardsState extends State<learn_cards>{
       };
     };
 
+    double learned = 0;
+    double learning = 0;
+    double new_card = 0;
+
+    for(var i = 0; i<cards.length; i++){
+      if(cards[i]["status"] == "new"){
+        new_card++;
+      }else if(cards[i]["status"] == "learning"){
+        learning++;
+      }else if(cards[i]["status"] == "learned"){
+        learned++;
+      }
+    }
+    var sum = new_card + learning + learned;
+    new_card = 1 - (new_card/sum);
+    learned = learned/sum;
+
     return (
       Scaffold(
         body: SafeArea(
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.only(top: 15, left: 15, right: 15),
+                margin: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -81,6 +98,32 @@ class _learn_cardsState extends State<learn_cards>{
                     Icon(Icons.more_vert, size: 23),
                   ],
                 ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xff93F6AF),
+                        Color(0xff93F6AF),
+                        Color(0xffEFF693),
+                        Color(0xffEFF693),
+                        Color(0xffF69393),
+                        Color(0xffF69393),
+                      ],
+                      stops: [
+                        0.0,
+                        learned,
+                        learned,
+                        new_card,
+                        new_card,
+                        1
+                      ]
+                  ),
+                ),
+                height: 3,
+                width: MediaQuery.of(context).size.width,
               ),
               Expanded(
                 child: Center(

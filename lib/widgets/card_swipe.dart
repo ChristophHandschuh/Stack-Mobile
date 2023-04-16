@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
   double direction = 0;
   Offset dragStartOffset = Offset(0, 0);
   Offset dragUpdateOffset = Offset(0, 0);
+  var bordercolor = Color(0xffc7c7c7);
 
   @override
   void initState() {
@@ -90,6 +92,21 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                 dragUpdateOffset = details.globalPosition;
 
                 Offset userDragOffset = dragUpdateOffset - dragStartOffset;
+                print(userDragOffset.dx);
+                if(userDragOffset.dx.abs() > MediaQuery.of(context).size.width/6){
+                  setState(() {
+                    if(userDragOffset.dx > 0) {
+                      bordercolor = Color(0xffA3F693).withOpacity(min(
+                          1.0, userDragOffset.dx.abs() / (MediaQuery.of(context).size.width / 2)));
+                    }else{
+                      bordercolor = Color(0xffF69393).withOpacity(min(1.0, userDragOffset.dx.abs() / (MediaQuery.of(context).size.width/2)));
+                    }
+                  });
+                }else{
+                  setState(() {
+                    bordercolor = Color(0xffc7c7c7);
+                  });
+                }
                 direction = userDragOffset.direction;
                 cardAnimationController.value = userDragOffset.distance;
               },
@@ -114,7 +131,8 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                 width: screenWidth-60,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border.all(color: Color(0xffc7c7c7)),
+                  //if(dragUpdateOffset.distance.y - dragStartOffset.distance.y > MediaQuery.of(context).size.width/6)
+                  border: Border.all(color: bordercolor),
                   //border: Border.all(color: Colors.red),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
