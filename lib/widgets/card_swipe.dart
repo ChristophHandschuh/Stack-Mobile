@@ -55,31 +55,7 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return FlipCard(
-      fill: Fill.fillBack, // Fill the back side of the card to make in the same size as the front.
-      direction: FlipDirection.HORIZONTAL, // default
-      side: CardSide.FRONT, // The side to initially display.
-      front: Container(
-        //margin: const EdgeInsets.only(top: 20),
-        height: screenWidth*1.4,
-        width: screenWidth-60,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Color(0xffc7c7c7)),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 5,
-              offset: Offset(0, 2), // Shadow position
-            ),
-          ],
-        ),
-        child: Center(
-          child: Text(widget.data["front"], style: TextStyle(fontSize: 22, fontFamily: "Outfit", color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
-        ),
-      ),
-      back: AnimatedBuilder(
+    return AnimatedBuilder(
         animation: cardAnimationController,
         builder: (context, _){
           return Transform.translate(
@@ -92,12 +68,10 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                 dragUpdateOffset = details.globalPosition;
 
                 Offset userDragOffset = dragUpdateOffset - dragStartOffset;
-                print(userDragOffset.dx);
                 if(userDragOffset.dx.abs() > MediaQuery.of(context).size.width/6){
                   setState(() {
                     if(userDragOffset.dx > 0) {
-                      bordercolor = Color(0xffA3F693).withOpacity(min(
-                          1.0, userDragOffset.dx.abs() / (MediaQuery.of(context).size.width / 2)));
+                      bordercolor = Color(0xffA3F693).withOpacity(min(1.0, userDragOffset.dx.abs() / (MediaQuery.of(context).size.width / 2)));
                     }else{
                       bordercolor = Color(0xffF69393).withOpacity(min(1.0, userDragOffset.dx.abs() / (MediaQuery.of(context).size.width/2)));
                     }
@@ -125,7 +99,32 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                 //cardAnimationController.animateWith(springSimulation);
                 cardAnimationController.addListener(swipe_direction);
               },
-              child: Container(
+              child: FlipCard(
+                fill: Fill.fillBack, // Fill the back side of the card to make in the same size as the front.
+                direction: FlipDirection.HORIZONTAL, // default
+                speed: 250,
+                side: CardSide.FRONT, // The side to initially display.
+                front: Container(
+                  //margin: const EdgeInsets.only(top: 20),
+                  height: screenWidth*1.4,
+                  width: screenWidth-60,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Color(0xffc7c7c7)),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5,
+                        offset: Offset(0, 2), // Shadow position
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(widget.data["front"], style: TextStyle(fontSize: 22, fontFamily: "Outfit", color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
+                  ),
+                ),
+                back: Container(
                 //margin: const EdgeInsets.only(top: 20),
                 height: screenWidth*1.4,
                 width: screenWidth-60,
@@ -143,14 +142,14 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                     ),
                   ],
                 ),
-                child: Center(
-                  child: Text(widget.data["back"], style: TextStyle(fontSize: 22, fontFamily: "Outfit", color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
+                  child: Center(
+                    child: Text(widget.data["back"], style: TextStyle(fontSize: 22, fontFamily: "Outfit", color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400)),
+                  ),
                 ),
               ),
             ),
           );
         },
-      ),
     );
   }
 }
