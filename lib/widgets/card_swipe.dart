@@ -93,6 +93,7 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                   SpringDescription springDescription = SpringDescription(mass: 5, stiffness: 5, damping: 5);
                   SpringSimulation springSimulation = SpringSimulation(springDescription, cardAnimationController.value, 0, details.velocity.pixelsPerSecond.distance);
                   cardAnimationController.animateWith(springSimulation);
+                  bordercolor = Color(0xffc7c7c7);
                 }
                 //SpringDescription springDescription = SpringDescription(mass: 5, stiffness: 5, damping: 5);
                 //SpringSimulation springSimulation = SpringSimulation(springDescription, cardAnimationController.value, 0, details.velocity.pixelsPerSecond.distance);
@@ -110,7 +111,7 @@ class _card_swipeState extends State<card_swipe> with SingleTickerProviderStateM
                   width: screenWidth-60,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: Color(0xffc7c7c7)),
+                    border: Border.all(color: bordercolor),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
