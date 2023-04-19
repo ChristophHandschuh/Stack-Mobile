@@ -8,13 +8,13 @@ import 'package:stack_flashcards/main_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.white,
       statusBarIconBrightness: Brightness.dark
   ));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);  //Prevents horizontal use
   runApp(MaterialApp(
       theme: ThemeData(fontFamily: 'Outfit'),
       debugShowCheckedModeBanner: false,
