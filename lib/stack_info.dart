@@ -1,3 +1,4 @@
+import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:stack_flashcards/functions/fetch_cards.dart';
@@ -68,10 +69,11 @@ class _stack_infoState extends State<stack_info>{
                 margin: const EdgeInsets.only(top: 15, left: 15, right: 15),
                 child: Row(
                   children: [
-                    InkWell(
+                    ExpandTapWidget(
                         onTap: (){
                           Navigator.pop(context);
                         },
+                        tapPadding: EdgeInsets.all(10),
                         child: Icon(Icons.arrow_back_ios_new, size: 23),
                     ),
                     Spacer(),

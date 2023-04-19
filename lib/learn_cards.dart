@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -88,10 +89,11 @@ class _learn_cardsState extends State<learn_cards>{
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
+                    ExpandTapWidget(
                         onTap: (){
                           Navigator.pop(context);
                         },
+                        tapPadding: EdgeInsets.all(10),
                         child: Icon(Icons.arrow_back_ios_new, size: 23)
                     ),
                     Text(cards.where((i) => i["status"] == "learned").length.toString()+"/"+cards.length.toString(), style: TextStyle(fontSize: 20)),
