@@ -2,11 +2,13 @@ import 'dart:developer';
 import 'package:stack_flashcards/stack_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stack_flashcards/functions/delete_stacks.dart' as ds;
 
 class stack_item extends StatelessWidget {
   final data;
   final index;
-  const stack_item({Key? key, required this.data, required this.index}) : super(key: key);
+  final func;
+  const stack_item({Key? key, required this.data, required this.index, required this.func}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,30 @@ class stack_item extends StatelessWidget {
             ),
           );
         },
+        onLongPress: () {  showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Delete Satck'),
+              content: Text('Once deleted it cannot be restored!'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('CANCEL'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Delete'),
+                  onPressed: () {
+                    ds.onDeleteStack(index, func);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );},
         child: Row(
           children: [
             Container(
