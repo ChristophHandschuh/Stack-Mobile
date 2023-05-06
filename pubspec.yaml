@@ -54,6 +54,7 @@ dependencies:
   dio: ^5.1.1
   dio_cookie_manager: ^3.0.0
   expand_tap_area: ^1.1.0
+  app_usage: ^2.1.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.0
