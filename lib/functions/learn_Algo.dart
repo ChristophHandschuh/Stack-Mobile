@@ -1,14 +1,29 @@
 import 'package:hive/hive.dart';
-
 final storage = Hive.box('storage');
 
+var NEW_STEPS = [1, 10];
+
 Future<Map<String,dynamic>> learn_Algo(res, cards) async {
-  if(res == true){ //card right
-    cards[0]["time"] = DateTime.now().add(Duration(minutes: 5)).millisecondsSinceEpoch;
-  }else if(res == false){
-    //when res is false, it means the user got the question wrong
-    //the cards[0].time should be updated to 1 minute in the future and sorted in the array with ascending time
-    cards[0]["time"] = DateTime.now().add(Duration(minutes: 1)).millisecondsSinceEpoch;
+  var current_card = cards[0];
+  if(current_card["status"] == "new"){
+    if(res){
+      current_card["step_index"] = 1;
+    }
+    current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]])).millisecondsSinceEpoch;
+    current_card["status"] = "learning";
+  }else if(current_card["status"] == "learning"){
+    if(res){ //card right
+      current_card["step_index"] = current_card["step_index"] + 1;
+      if(current_card["step_index"] > NEW_STEPS.length) {
+        current_card["status"] = "learned";
+        current_card["time"] = DateTime.now().add(Duration(minutes: 300)).millisecondsSinceEpoch;
+      }else{
+        current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]])).millisecondsSinceEpoch;
+      }
+    }else{ //card wrong
+      current_card["step_index"] = 0;
+      current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]])).millisecondsSinceEpoch;
+    }
   }
 
   sort_ascending(cards);
