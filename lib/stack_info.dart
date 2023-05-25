@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:stack_flashcards/functions/fetch_cards.dart';
 import 'package:stack_flashcards/learn_cards.dart';
 import 'package:stack_flashcards/widgets/card_item.dart';
+import 'package:clipboard/clipboard.dart';
 
 class stack_info extends StatefulWidget {
   final index;
@@ -77,7 +78,17 @@ class _stack_infoState extends State<stack_info>{
                         child: Icon(Icons.arrow_back_ios_new, size: 23),
                     ),
                     Spacer(),
-                    Icon(Icons.share, size: 23),
+                    IconButton(
+                        iconSize: 23,
+                        icon: const Icon(
+                          Icons.share,
+                          color: Colors.black,
+                        ),
+                        onPressed: () async {
+                          var pdf = "PDF Liste hier";
+                          FlutterClipboard.copy(pdf);
+                        }
+                    ),
                     Container(
                       padding: const EdgeInsets.only(left: 15),
                       child: Icon(Icons.more_vert, size: 23)

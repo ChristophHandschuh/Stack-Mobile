@@ -10,6 +10,7 @@ class library_page extends StatefulWidget {
 }
 
 class _library_pageState extends State<library_page> {
+
   final storage = Hive.box('storage');
   //List<Map<String, dynamic>> stacks = [];
   late var stacks = storage.get(0);
@@ -94,13 +95,14 @@ class _library_pageState extends State<library_page> {
                   child: ListView.builder(
                       padding: const EdgeInsets.only(left: 12, right: 12, top: 15),
                       itemCount: foundStacks.length,
-                      itemBuilder: (context, index) => stack_item(data: foundStacks[index], index: index),
+                      itemBuilder: (context, index) => stack_item(data: foundStacks[index], index: index, func: updateStacks),
                   ),
                   onRefresh: () async {
                     await fetch_stacks();
                     stacks = storage.get(0);
                     updateStacks();
                   },
+
                 ) : LayoutBuilder(
                       builder: (context, constraints) => RefreshIndicator(
                         color: Colors.black,
