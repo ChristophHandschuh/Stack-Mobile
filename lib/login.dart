@@ -3,6 +3,8 @@ import 'package:stack_flashcards/functions/check_login.dart';
 import 'package:stack_flashcards/functions/login_func.dart';
 import 'package:stack_flashcards/home.dart';
 import 'package:stack_flashcards/main_page.dart';
+import 'package:expand_tap_area/expand_tap_area.dart';
+import 'package:stack_flashcards/welcome.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -17,54 +19,115 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset : false,
       body: SafeArea(
-          child: Column(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 40, bottom: 40),
-                child: Text("Login", style: TextStyle(fontSize: 35))
+              margin: const EdgeInsets.only(right: 15, left: 15),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: ExpandTapWidget(
+                        onTap: (){
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => Welcome(),
+                            ),
+                          );
+                        },
+                        tapPadding: EdgeInsets.all(10),
+                        child: Icon(Icons.arrow_back_ios_new, size: 23),
+                      ),
+                    ),
+                  ]
+              ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 15, right: 15),
+                height: 240,
+                child: Center(
+                    child: Image.asset('assets/images/login.png', width: 350)
+                )
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 0, left: 20),
+              child: Text("Welcome back! Glad \nto see you again!", style: TextStyle(fontSize: 30)),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 15, right: 15, top: 20),
               child: TextField(
+                obscureText: false,
+                enableSuggestions: false,
+                autocorrect: false,
                 controller: username,
                 decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Username',
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(),
+                  hintText: 'Enter your Email',
                 ),
               ),
             ),
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
               child: TextField(
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
                 controller: password,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(),
                   hintText: 'Password',
                 ),
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 50),
-              child: ElevatedButton(
-                child: Text("Submit"),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.grey,
+                width: screenWidth-30,
+                height: 54,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 2,
+                      offset: Offset(0, 2), // Shadow position
+                    ),
+                  ],
                 ),
-                onPressed: () async {
-                  var data = await login_func(username.text, password.text);
-                   if(data["loggedIn"] == true){
-                     Navigator.of(context).push(
-                       MaterialPageRoute(
-                         builder: (_) => main_page(),
-                       ),
-                     );
-                   }
-                },
-              ),
+                margin: const EdgeInsets.only(left: 15, top: 30),
+                child: InkWell(
+                  onTap: () async {
+                    print("Login");
+                    var data = await login_func(username.text, password.text);
+                    if(data["loggedIn"] == true){
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => main_page(),
+                        ),
+                      );
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        child: Icon(Icons.login),
+                      ),
+                      Text("Login", style: TextStyle(fontSize: 18)),
+                    ],
+                  ),
+                ),
             ),
-          ],
+          ]
         ),
       ),
     );

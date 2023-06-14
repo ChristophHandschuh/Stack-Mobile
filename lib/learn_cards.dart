@@ -37,7 +37,7 @@ class _learn_cardsState extends State<learn_cards>{
   Widget build(BuildContext context) {
     Function onLeftSwipe = () {
       return () async {
-        var card_now = await learn_Algo(false, cards);
+        var card_now = await learn_Algo(false, cards, stacks[widget.index]["_id"]);
         print(card_now.isNotEmpty);
         stacks[widget.index]["cards"] = cards;
         storage.put(0, stacks);
@@ -51,7 +51,7 @@ class _learn_cardsState extends State<learn_cards>{
 
     Function onRightSwipe = () {
       return () async{
-        var card_now = await learn_Algo(true, cards);
+        var card_now = await learn_Algo(true, cards, stacks[widget.index]["_id"]);
         stacks[widget.index]["cards"] = cards;
         storage.put(0, stacks);
         setState(() {

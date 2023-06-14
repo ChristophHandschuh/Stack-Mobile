@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stack_flashcards/login.dart';
 import 'package:stack_flashcards/main_page.dart';
+import 'package:stack_flashcards/welcome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,7 @@ void main() async {
   runApp(MaterialApp(
       theme: ThemeData(fontFamily: 'Outfit'),
       debugShowCheckedModeBanner: false,
-      home: Stack_App()
+      home: Stack_App()//Stack_App()
   ));
 }
 
@@ -40,7 +41,7 @@ class _StackState extends State<Stack_App> {
               return main_page();
             } else if(snapshot.hasData && snapshot.data == false){
               print("LOGIN");
-              return Login();
+              return Welcome();
             }else{
               return Scaffold(
                 body: Center(

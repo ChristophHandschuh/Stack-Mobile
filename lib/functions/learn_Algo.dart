@@ -1,15 +1,17 @@
 import 'package:hive/hive.dart';
+import 'dart:math';
+import 'package:stack_flashcards/functions/update_cards.dart';
 final storage = Hive.box('storage');
 
 var NEW_STEPS = [1, 10];
 
-Future<Map<String,dynamic>> learn_Algo(res, cards) async {
+Future<Map<String,dynamic>> learn_Algo(res, cards, stack_id) async {
   var current_card = cards[0];
   if(current_card["status"] == "new"){
     if(res){
       current_card["step_index"] = 1;
     }
-    current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]])).millisecondsSinceEpoch;
+    current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]] + Random().nextInt(2))).millisecondsSinceEpoch;
     current_card["status"] = "learning";
   }else if(current_card["status"] == "learning"){
     if(res){ //card right
@@ -18,15 +20,27 @@ Future<Map<String,dynamic>> learn_Algo(res, cards) async {
         current_card["status"] = "learned";
         current_card["time"] = DateTime.now().add(Duration(minutes: 300)).millisecondsSinceEpoch;
       }else{
-        current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]])).millisecondsSinceEpoch;
+        current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]] + Random().nextInt(2))).millisecondsSinceEpoch;
       }
     }else{ //card wrong
+      current_card["status"] = "new";
       current_card["step_index"] = 0;
-      current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]])).millisecondsSinceEpoch;
+      current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]] + Random().nextInt(2))).millisecondsSinceEpoch;
     }
-  }
+  }else if(current_card["status"] == "learned"){
+    if(res){ //card right
+        current_card["time"] = DateTime.now().add(Duration(minutes: 2000)).millisecondsSinceEpoch;
+      }else{
+        current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]] + Random().nextInt(2))).millisecondsSinceEpoch;
+      }
+    }else{ //card wrong
+      current_card["status"] = "new";
+      current_card["step_index"] = 0;
+      current_card["time"] = DateTime.now().add(Duration(minutes: NEW_STEPS[current_card["step_index"]] + Random().nextInt(2))).millisecondsSinceEpoch;
+    }
 
   sort_ascending(cards);
+  update_cards(stack_id, cards);
   print(cards);
 
   //check if card.date is, or is more then 1 minute in the future
