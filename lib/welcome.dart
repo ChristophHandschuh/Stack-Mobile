@@ -4,6 +4,7 @@ import 'package:stack_flashcards/functions/login_func.dart';
 import 'package:stack_flashcards/home.dart';
 import 'package:stack_flashcards/login.dart';
 import 'package:stack_flashcards/main_page.dart';
+import 'package:stack_flashcards/signup.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -72,15 +73,24 @@ class _WelcomeState extends State<Welcome> {
                       ],
                     ),
                     margin: const EdgeInsets.only(left: 20, top: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 10),
-                          child: Icon(Icons.person),
-                        ),
-                        Text("Sign Up with Email", style: TextStyle(fontSize: 18, color: Colors.grey.shade600)),
-                      ],
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => SignUp(),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            child: Icon(Icons.person),
+                          ),
+                          Text("Sign Up with Email", style: TextStyle(fontSize: 18, color: Colors.grey.shade600)),
+                        ],
+                      ),
                     )
                 ),
                 Row(

@@ -14,8 +14,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final username = TextEditingController();
+  final email = TextEditingController();
   final password = TextEditingController();
+  var login_text = "Welcome back! Glad \nto see you again!";
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class _LoginState extends State<Login> {
             ),
             Container(
               margin: const EdgeInsets.only(top: 0, left: 20),
-              child: Text("Welcome back! Glad \nto see you again!", style: TextStyle(fontSize: 30)),
+              child: Text(login_text, style: TextStyle(fontSize: 30)),
             ),
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15, top: 20),
@@ -66,7 +67,7 @@ class _LoginState extends State<Login> {
                 obscureText: false,
                 enableSuggestions: false,
                 autocorrect: false,
-                controller: username,
+                controller: email,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(),
@@ -105,14 +106,17 @@ class _LoginState extends State<Login> {
                 margin: const EdgeInsets.only(left: 15, top: 30),
                 child: InkWell(
                   onTap: () async {
-                    print("Login");
-                    var data = await login_func(username.text, password.text);
+                    var data = await login_func(email.text, password.text);
                     if(data["loggedIn"] == true){
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) => main_page(),
                         ),
                       );
+                    }else{
+                      setState(() {
+                        login_text = "Login failed. Please try again.";
+                      });
                     }
                   },
                   child: Row(

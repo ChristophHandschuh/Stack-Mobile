@@ -18,7 +18,7 @@ class _main_pageState extends State<main_page> {
   int index = 0;
 
   final pages = [
-    home(),
+    Home(),
     library_page(),
     add(),
     explore(),

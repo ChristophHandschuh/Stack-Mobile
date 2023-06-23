@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:stack_flashcards/widgets/stack_item.dart';
 import 'package:stack_flashcards/functions/fetch_stacks.dart';
+import 'package:stack_flashcards/widgets/stack_item_02.dart';
 
 class library_page extends StatefulWidget {
 
@@ -95,7 +96,7 @@ class _library_pageState extends State<library_page> {
                   child: ListView.builder(
                       padding: const EdgeInsets.only(left: 12, right: 12, top: 15),
                       itemCount: foundStacks.length,
-                      itemBuilder: (context, index) => stack_item(data: foundStacks[index], index: index, func: updateStacks),
+                      itemBuilder: (context, index) => stack_item_02(data: foundStacks[index], index: index, func: updateStacks),
                   ),
                   onRefresh: () async {
                     await fetch_stacks();
