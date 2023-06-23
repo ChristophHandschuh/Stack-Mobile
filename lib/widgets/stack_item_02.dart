@@ -17,8 +17,9 @@ class stack_item_02 extends StatelessWidget {
     double learning = 0;
     double new_card = 0;
     var learned_count = 0;
+    var sum = data["cards"].length;
 
-    for(var i = 0; i<data["cards"].length; i++){
+    for(var i = 0; i<sum; i++){
       if(data["cards"][i]["status"] == "new"){
         new_card++;
       }else if(data["cards"][i]["status"] == "learning"){
@@ -28,9 +29,10 @@ class stack_item_02 extends StatelessWidget {
         learned_count++;
       }
     }
-    var sum = new_card + learning + learned;
+
     new_card = 1 - (new_card/sum);
     learned = learned/sum;
+    var percent_learned = ((learned_count/data["cards"].length)*100).round();
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
@@ -82,28 +84,48 @@ class stack_item_02 extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.only(left: 10),
-              height: 95,
+              height: 92,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                      margin: const EdgeInsets.only(top: 17, left: 10),
-                      child: Text(data["name"], style: TextStyle(fontFamily: "Outfit_Bold", fontSize: 20))
+                      margin: const EdgeInsets.only(top: 15, left: 10),
+                      child: Text(data["name"], style: TextStyle(fontFamily: "Outfit_Bold", fontSize: 18))
                   ),
                   Container(
-                      margin: const EdgeInsets.only(top: 5, left: 10),
-                      width: screenWidth - 62,
+                      margin: const EdgeInsets.only(top: 7, left: 10),
+                      width: screenWidth - 64,
                       child: Row(
                         children: [
                           Text(learned_count.toString() + "/" + data["cards"].length.toString(), style: TextStyle(fontSize: 12, color: Color(0xff909090))),
                           Spacer(),
-                          Text("66%", style: TextStyle(fontSize: 12))
+                          Text(percent_learned.toString() + "%", style: TextStyle(fontSize: 12))
                         ],
                       )
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 3, left: 10),
-                    decoration: BoxDecoration(
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 12,
+                          width: ((screenWidth - 64)*(percent_learned/100)),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xff6C63FF),
+                          ),
+                        ),
+                        Container(
+                          height: 12,
+                          width: ((screenWidth - 64)*(1-(percent_learned/100))),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xffDBDBDB),
+                          ),
+                        ),
+                      ],
+                    ),
+                    /*decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: LinearGradient(
                           begin: Alignment.centerLeft,
@@ -121,9 +143,7 @@ class stack_item_02 extends StatelessWidget {
                             1
                           ]
                       ),
-                    ),
-                    height: 12,
-                    width: screenWidth - 62,
+                    ),*/
                   )
                 ],
               ),
