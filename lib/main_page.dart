@@ -14,7 +14,6 @@ class main_page extends StatefulWidget {
 }
 
 class _main_pageState extends State<main_page> {
-  Future fetch = fetch_stacks();
   int index = 0;
 
   final pages = [

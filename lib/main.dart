@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:stack_flashcards/functions/check_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:stack_flashcards/functions/fetch_stacks.dart';
 import 'package:stack_flashcards/login.dart';
 import 'package:stack_flashcards/main_page.dart';
 import 'package:stack_flashcards/welcome.dart';
@@ -16,6 +17,7 @@ void main() async {
       statusBarIconBrightness: Brightness.dark
   ));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);  //Prevents horizontal use
+  fetch_stacks(); //Fetches Stacks on Loading
   runApp(MaterialApp(
       theme: ThemeData(fontFamily: 'Outfit'),
       debugShowCheckedModeBanner: false,
@@ -44,13 +46,14 @@ class _StackState extends State<Stack_App> {
               return Welcome();
             }else{
               return Scaffold(
+                backgroundColor: Colors.white,
                 body: Center(
                   child: Text("Error"),
                 ),
               );
             }
           }else{
-            return Scaffold();
+            return Scaffold(backgroundColor: Colors.white);
           }
         }
     );
